@@ -1,7 +1,7 @@
 -- migrate:up
 CREATE TABLE order_status_codes (
-  id integer PRIMARY KEY,
-  order_status_description varchar(150) NOT NULL
+  id INTEGER PRIMARY KEY,
+  order_status_description VARCHAR(150) NOT NULL 
 );
 
 -- migrate:down

@@ -1,7 +1,7 @@
 -- migrate:up
 CREATE TABLE preferred_stores (
-  id integer PRIMARY KEY AUTO_INCREMENT,
-  stores_name varchar(200) NOT NULL
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  stores_name VARCHAR(200) NOT NULL
 );
 
 -- migrate:down
