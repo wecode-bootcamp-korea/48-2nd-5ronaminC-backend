@@ -5,15 +5,15 @@ const cors = require('cors');
 const morgan = require('morgan');
 const appDataSource = require('./api/models/dataSource');
 const { globalErrorHandler } = require('./api/utils/error');
-const route = require('./api/routes');
+const routes = require('./api/routes');
 
-const PORT = 3000;
+const PORT = process.env.PORT;
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 app.use(morgan('combined'));
-app.use(route);
+app.use(routes);
 app.use(globalErrorHandler);
 
 app.get('/ping', (req, res) => {
