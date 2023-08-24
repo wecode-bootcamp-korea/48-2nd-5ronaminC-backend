@@ -1,6 +1,7 @@
-const dataSource = require('./dataSource');
-
+const appDataSource = require('./dataSource');
+const userDao = require('./userDao');
 
 module.exports = {
-    dataSource
-}
+    appDataSource,
+    userDao,
+};
