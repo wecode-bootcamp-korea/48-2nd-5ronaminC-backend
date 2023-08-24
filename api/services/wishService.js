@@ -1,11 +1,11 @@
 const wishDao = require('../models/wishDao');
 
-const addwishProduct = async (userId, productId) => {
+const addWishProduct = async (userId, productId) => {
     
-    return await wishDao.addwishProduct(userId, productId);
+    return await wishDao.addWishProduct(userId, productId);
     
 };
 
 module.exports = {
-    addwishProduct
+    addWishProduct
 };
