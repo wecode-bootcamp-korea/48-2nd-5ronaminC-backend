@@ -5,7 +5,7 @@ const { catchAsync } = require('../utils/error');
     const userId = req.body.userId; 
     const productId  = req.params.productId; 
 
-    const addWishProduct = await wishService.addWishProduct(
+    await wishService.addWishProduct(
         userId,
         productId
     );

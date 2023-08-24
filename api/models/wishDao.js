@@ -16,7 +16,7 @@ const addWishProduct = async (userId, productId) => {
             [userId, productId]
         );
         
-        return addWishData.insertId;
+        return addWishData;
     } catch {
         const error = new Error('dataSource Error');
         error.statusCode = 400;
