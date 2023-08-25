@@ -20,7 +20,7 @@ const validateSignUp = async (
       const error = new Error("INVALID_USER : email");
       error.statusCode = 400;
   
-      throw error;
+      throw error; 
     }
   
     if (!passwordRegex.test(password)) {
@@ -53,5 +53,5 @@ const validateSignUp = async (
 };
 
 module.exports = {
-    validateSignUp,
+    validateSignUp, 
 }
