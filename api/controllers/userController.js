@@ -44,6 +44,18 @@ const signUp = catchAsync(async (req, res) => {
   res.status(201).json({ message: "user is created", createUser });
 });
 
+const signIn = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const accessToken = await userService.signIn(email, password);
+        res.status(200).json({ accessToken });
+    } catch (err) {
+        res.status(err.statusCode).json({ message : err.message });
+    }
+};
+
 module.exports = {
   signUp,
+  signIn
 };
