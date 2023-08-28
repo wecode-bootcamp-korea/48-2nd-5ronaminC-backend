@@ -39,6 +39,39 @@ const signUp = async(
   return createUser;
 };
 
+const signIn = async (email, password) => {
+  const user = await userDao.getUserByEmail(email);
+
+  if (!user) {
+    const error = new Error('INVALID_USER');
+    error.statusCode = 401;
+
+    throw error;
+  }
+
+  const isMatched = await bcrypt.compare(password, user.password);
+
+  if (!isMatched) {
+    const error = new Error('INVALID_USER');
+    error.statusCode = 401;
+
+    throw error;
+  }
+
+  const accessToken = jwt.sign({ id : user.id }, process.env.JWT_SECRET, {
+    algorithm : process.env.ALGORITHM,
+    expiresIn : process.env.JWT_EXPIRES_IN,
+  });
+
+  return accessToken;
+};
+
+const getUserById = async (id) => {
+  return await userDao.getUserById(id);
+};
+
 module.exports = {
   signUp,
+  signIn,
+  getUserById
 }

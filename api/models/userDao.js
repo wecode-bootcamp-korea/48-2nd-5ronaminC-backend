@@ -1,4 +1,4 @@
-const dataSource = require("./dataSource");
+const appDataSource = require("./dataSource");
 
 const createUser = async (
   username,
@@ -9,11 +9,11 @@ const createUser = async (
   gender,
   address,
   postCode,
-  preferredStoreId,
+  preferredStoreId
 ) => {
   try {
-    const result = await dataSource.query(
-            `
+    const result = await appDataSource.query(
+      `
             INSERT INTO users (
                 username, 
                 email, 
@@ -42,8 +42,7 @@ const createUser = async (
     );
 
     return result;
-
-  } catch(err) {
+  } catch (err) {
     const error = new Error("dataSource Error");
     error.statusCode = 400;
 
@@ -51,6 +50,47 @@ const createUser = async (
   }
 };
 
+const getUserByEmail = async (email) => {
+  try {
+    const [result] = await appDataSource.query(
+      `
+    SELECT id, email, password
+    FROM users
+    WHERE email = ?
+    `,
+      [email]
+    );
+    return result;
+  } catch {
+    const error = new Error("dataSource Error : getUserByEmail");
+    error.statusCode = 400;
+
+    throw error;
+  }
+};
+
+const getUserById = async (id) => {
+  try {
+    const [result] = await appDataSource.query(
+      `
+    SELECT id, email, password
+    FROM users
+    WHERE email = ?
+    `,
+      [id]
+    );
+    return result;
+  } catch {
+    const error = new Error("dataSource Error : getUserById");
+    error.statusCode = 400;
+
+    throw error;
+  }
+};
+
+
 module.exports = {
-    createUser,
+  createUser,
+  getUserByEmail,
+  getUserById
 };
