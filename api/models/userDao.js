@@ -75,7 +75,7 @@ const getUserById = async (id) => {
       `
     SELECT id, email, password
     FROM users
-    WHERE email = ?
+    WHERE id = ?
     `,
       [id]
     );
@@ -88,9 +88,8 @@ const getUserById = async (id) => {
   }
 };
 
-
 module.exports = {
   createUser,
   getUserByEmail,
-  getUserById
+  getUserById,
 };
