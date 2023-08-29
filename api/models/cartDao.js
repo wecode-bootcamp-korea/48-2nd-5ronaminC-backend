@@ -1,4 +1,4 @@
-const appDataSource = require("./dataSrouce");
+const appDataSource = require("./dataSource");
 
 const deleteCartProduct = async (userId, productId) => {
   try {
@@ -8,14 +8,20 @@ const deleteCartProduct = async (userId, productId) => {
       `,
       [productId, userId]
     );
+    console.log("result : ", result);
 
     const deletedRows = result.affectedRows;
 
-    if (deletedRows !== 0 && deletedRows !== 1)
+    console.log("deletedRows = ", deletedRows);
+
+    if (deletedRows == 0) throw new Error("[caution] not authorized user");
+    else if (deletedRows !== 0 && deletedRows !== 1)
       throw new Error("UNEXPECTED_NUMBER_OF_RECORDS_DELETED");
 
     return deletedRows;
-  } catch {
+  } catch (err) {
+    console.log(err);
+
     const error = new Error("dataSource Error");
     error.statusCode = 400;
 
