@@ -2,8 +2,8 @@ const { wishService } = require('../services');
 const { catchAsync } = require('../utils/error');
 
  const addWishProduct = catchAsync(async (req, res) => {
-    const productId  = req.params.productId;
-    const userId = req.user.id;
+   const userId = req.user.id;
+   const productId  = req.params.productId;
 
     await wishService.addWishProduct(
       userId,
