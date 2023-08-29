@@ -3,7 +3,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const appDataSource = require('./api/models/dataSource');
+
+const  appDataSource = require('./api/models/dataSource');
 const { globalErrorHandler } = require('./api/utils/error');
 const routes = require('./api/routes');
 
