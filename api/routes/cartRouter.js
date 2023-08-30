@@ -1,0 +1,10 @@
+const express = require('express');
+
+const { cartController } = require('../controllers');
+const { loginRequired } = require('../utils/auth');
+
+const routes = express.Router();
+
+routes.post('/addcart', loginRequired, cartController.addProductCart);
+
+module.exports = routes;
