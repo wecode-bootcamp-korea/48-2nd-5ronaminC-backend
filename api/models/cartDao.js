@@ -21,7 +21,7 @@ const getCartId = async(userId, productId) => {
     }
 }
 
-const getProductsByCart = async(userId, productId, productCount) => {
+const appProductsByCart = async(userId, productId, productCount) => {
     
     try{
         const product = await appDataSource.query(
@@ -49,18 +49,17 @@ const getProductsByCart = async(userId, productId, productCount) => {
 
 };
 
-const updateProductsByCart = async(productId, updateproductQuantity, cartId) => {
+const updateProductsByCart = async( productCount, cartId) => {
     try {
         const updateByCart = await appDataSource.query(
             `
             UPDATE carts
             SET 
-                product_id = ?,
-                product_quantity = ?
+                product_quantity = product_quantity + ?
             WHERE id = ?;
             `
             ,
-            [productId, updateproductQuantity, cartId]
+            [productCount , cartId]
         );
         return updateByCart;
     } catch {
@@ -74,6 +73,6 @@ const updateProductsByCart = async(productId, updateproductQuantity, cartId) => 
 
 module.exports = {
     getCartId,
-    getProductsByCart,
+    appProductsByCart,
     updateProductsByCart
 }
