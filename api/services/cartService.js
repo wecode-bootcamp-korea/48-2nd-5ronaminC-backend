@@ -1,11 +1,10 @@
 const { cartDao } = require("../models");
 
 const getCartList = async (userId) => {
-  //return await cartDao.getCartList(userId);
-
   const cartList = await cartDao.getCartList(userId);
   const [cartListFirstElement] = cartList;
 
+  console.log("cartListFirstElement");
   console.log(cartListFirstElement);
 
   const totalProductPrice = parseInt(cartListFirstElement.totalProductPrice);
@@ -24,14 +23,12 @@ const getCartList = async (userId) => {
     }
   }
 
-  return cartList;
-};
+  console.log("cartList");
+  console.log(cartList);
 
-const deleteCartProduct = async (userId, productId) => {
-  return await cartDao.deleteCartProduct(userId, productId);
+  return cartList;
 };
 
 module.exports = {
   getCartList,
-  deleteCartProduct,
 };
