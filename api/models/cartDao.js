@@ -3,31 +3,19 @@ const appDataSource = require("./dataSource");
 const getCartList = async (userId) => {
   try {
     const data = await appDataSource.query(
-      // `
-      // SELECT
-      // c.user_id userId,
-      // c.product_id productId,
-      // c.product_quantity productQuantity,
-      // p.product_name productName,
-      // p.price,
-      // p.description,
-      // p.color_id colorId,
-      // p.size_option_id sizeOptionId
-      // FROM carts c
-      // INNER JOIN products p ON p.id = c.product_id
-      // WHERE c.user_id = ?;
-
-      // `,
       `
-      SELECT
+        SELECT
         ca.user_id userId,
         ca.product_id productId,
         ca.product_quantity productQuantity,
-        (SELECT SUM(product_quantity) 
-          FROM carts 
-          WHERE user_id = 2) AS totalProductQuantity,
+        (SELECT SUM(product_quantity)
+          FROM carts
+          WHERE user_id = ?) AS totalProductQuantity,
         p.product_name productName,
         p.price,
+        p.width,
+        p.depth,
+        p.height,
         p.description,
         p.color_id colorId,
         co.color_name colorName,
@@ -40,15 +28,15 @@ const getCartList = async (userId) => {
           FROM carts ca
           LEFT JOIN products p ON p.id = ca.product_id
           WHERE ca.user_id = ?) AS totalProductPrice
-      FROM carts ca
-      LEFT JOIN products p ON p.id = ca.product_id
-      LEFT JOIN product_images pis ON pis.product_id = p.id
-      LEFT JOIN colors co ON co.id = p.color_id
-      LEFT JOIN size_options s ON s.id = p.size_option_id
-      LEFT JOIN category_types ct ON ct.id = p.category_type_id
-      WHERE ca.user_id = ?;
+        FROM carts ca
+        LEFT JOIN products p ON p.id = ca.product_id
+        LEFT JOIN product_images pis ON pis.product_id = p.id
+        LEFT JOIN colors co ON co.id = p.color_id
+        LEFT JOIN size_options s ON s.id = p.size_option_id
+        LEFT JOIN category_types ct ON ct.id = p.category_type_id
+        WHERE ca.user_id = ?;
       `,
-      [userId, userId]
+      [userId, userId, userId]
     );
     return data;
   } catch {

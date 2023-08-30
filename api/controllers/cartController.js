@@ -2,8 +2,8 @@ const { cartService } = require("../services");
 const { catchAsync } = require("../utils/error");
 
 const getCartList = catchAsync(async (req, res) => {
-  const userId = 2; // 테스트용
-  // const userId = req.user.id;
+  //const userId = 2; // 테스트용
+  const userId = req.user.id;
 
   const cartList = await cartService.getCartList(userId);
 
