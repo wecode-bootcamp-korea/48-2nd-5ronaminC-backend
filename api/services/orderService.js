@@ -1,7 +1,12 @@
 const { orderDao } = require("../models");
+const { addShippingFee } = require("../utils/shippingFee");
 
 const getOrderInformation = async (userId) => {
-  return await orderDao.getOrderInformation(userId);
+  const orderInformation = await orderDao.getOrderInformation(userId);
+
+  const orderInformationResult = addShippingFee(orderInformation);
+
+  return orderInformationResult;
 };
 
 module.exports = {
