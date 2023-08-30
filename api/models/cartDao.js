@@ -8,11 +8,8 @@ const deleteCartProduct = async (userId, productId) => {
       `,
       [productId, userId]
     );
-    console.log("result : ", result);
 
     const deletedRows = result.affectedRows;
-
-    console.log("deletedRows = ", deletedRows);
 
     if (deletedRows == 0) throw new Error("[caution] not authorized user");
     else if (deletedRows !== 0 && deletedRows !== 1)
@@ -20,8 +17,6 @@ const deleteCartProduct = async (userId, productId) => {
 
     return deletedRows;
   } catch (err) {
-    console.log(err);
-
     const error = new Error("dataSource Error");
     error.statusCode = 400;
 
