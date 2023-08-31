@@ -146,8 +146,7 @@ const payCartProducts = async (
     await queryRunner.commitTransaction();
 
     return "결제 완료";
-  } catch (err) {
-    console.log(err);
+  } catch {
     await queryRunner.rollbackTransaction();
 
     const error = new Error("dataSource Error");
