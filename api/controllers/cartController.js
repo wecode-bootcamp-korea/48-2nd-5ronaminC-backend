@@ -21,7 +21,7 @@ const deleteCartProduct = catchAsync(async (req, res) => {
 
   await cartService.deleteCartProduct(userId, productId);
 
-  res.status(204).json({ message: "delete complete" });
+  res.status(200).json({ message: "delete complete" });
 });
 
 module.exports = {
