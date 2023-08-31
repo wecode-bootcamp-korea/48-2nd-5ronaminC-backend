@@ -5,6 +5,6 @@ const { loginRequired } = require('../utils/auth');
 
 const routes = express.Router();
 
-routes.get('/showproductdeatil/:productId', loginRequired, productController.getDetailproduct);
+routes.get('/showproductdetail/:productId', loginRequired, productController.getDetailproduct);
 
 module.exports = routes;
