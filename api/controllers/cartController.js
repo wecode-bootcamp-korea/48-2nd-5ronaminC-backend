@@ -6,9 +6,13 @@ const addProductCart = catchAsync(async (req, res) => {
   const productId = req.body.id;
   const productCount = req.body.productCount;
 
-  await cartService.addProductCart(userId, productId, productCount);
+  const addProductsByCart = await cartService.addProductCart(
+    userId,
+    productId,
+    productCount
+  );
 
-  res.status(201).json({ message: "Product successful add to cart" });
+  res.status(201).json({ data: addProductsByCart });
 });
 
 const getCartList = catchAsync(async (req, res) => {
