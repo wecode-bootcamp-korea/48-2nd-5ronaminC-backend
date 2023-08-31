@@ -9,6 +9,31 @@ const getOrderInformation = async (userId) => {
   return orderInformationResult;
 };
 
+const payCartProducts = async (
+  userId,
+  productId,
+  productQuantity,
+  subtotalPrice,
+  totalOrderPrice,
+  point
+) => {
+  const [usersPoint] = await orderDao.isEnoughPoint(userId);
+
+  const pointStringToInt = parseInt(usersPoint["point"]);
+
+  if (pointStringToInt < parseInt(totalOrderPrice)) return "잔액 부족";
+  else
+    return await orderDao.payCartProducts(
+      userId,
+      productId,
+      productQuantity,
+      subtotalPrice,
+      totalOrderPrice,
+      point
+    );
+};
+
 module.exports = {
   getOrderInformation,
+  payCartProducts,
 };
