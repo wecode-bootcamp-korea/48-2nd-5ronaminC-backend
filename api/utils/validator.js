@@ -8,7 +8,7 @@ const validateSignUp = async (
   const emailRegex = 
       /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
   const passwordRegex = 
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/; 
   const birthdateRegex = 
       /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
   const phoneNumberRegex = 
