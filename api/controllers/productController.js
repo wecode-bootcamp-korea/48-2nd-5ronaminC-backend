@@ -9,7 +9,7 @@ const getDetailproduct = catchAsync(async (req, res) => {
       productId
    );
 
-   res.status(201).json({data: productDetailPage});
+   res.status(200).json({ data: productDetailPage});
 });
 
 

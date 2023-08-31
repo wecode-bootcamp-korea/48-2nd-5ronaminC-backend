@@ -6,7 +6,7 @@ const getDetailproduct = async(productId) => {
             `
             SELECT 
                 p.id AS id,
-                JSON_ARRAYAGG(pis.product_image_url) AS imageUrl,
+                GROUP_CONCAT(pis.product_image_url) AS imageUrl,
                 p.product_name AS name,
                 p.price,
                 p.description,
