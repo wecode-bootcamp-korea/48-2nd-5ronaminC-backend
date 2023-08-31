@@ -5,7 +5,7 @@ const addProductCart = async (userId, productId, productCount) => {
   const getCartId = await cartDao.getCartId(userId, productId);
 
   if (!getCartId) {
-    return await cartDao.appProductsByCart(userId, productId, productCount);
+    return await cartDao.addProductsByCart(userId, productId, productCount);
   } else {
     const cartId = getCartId.id;
     return await cartDao.updateProductsByCart(productCount, cartId);
