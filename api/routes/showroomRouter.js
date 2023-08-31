@@ -8,8 +8,4 @@ routes.get("/", loginRequired, showroomController.getShowroom);
 routes.get('/category', showroomController.getCategory);
 routes.get('/preferredstore', showroomController.getPreferredStore);
 
-
-
-
-
 module.exports = routes;                
