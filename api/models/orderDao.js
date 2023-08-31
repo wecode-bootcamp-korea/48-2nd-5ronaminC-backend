@@ -6,9 +6,9 @@ const getOrderInformation = async (userId) => {
       `
       SELECT
         u.username,
-        u.phone_number,
+        u.phone_number phoneNumber,
         u.email,
-        u.post_code,
+        u.post_code postCode,
         u.address,
         u.point,
           (SELECT SUM(product_quantity) 
