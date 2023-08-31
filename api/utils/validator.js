@@ -10,7 +10,7 @@ const validateSignUp = async (
   const passwordRegex = 
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/; 
   const birthdateRegex = 
-      /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+      /^[0-9]{8}$/;
   const phoneNumberRegex = 
       /^[0-9]{11}$/;
   const postCodeRegex = 
