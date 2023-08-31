@@ -4,6 +4,7 @@ const wishDao = require("./wishDao");
 const cartDao = require("./cartDao");
 const orderDao = require("./orderDao");
 const showroomDao = require('./showroomDao');
+const productDao = require('./productDao');
 
 module.exports = {
     appDataSource,
@@ -12,4 +13,5 @@ module.exports = {
     cartDao,
     orderDao,
     showroomDao,
+    productDao
 };
