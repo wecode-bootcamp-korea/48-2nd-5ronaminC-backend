@@ -21,7 +21,7 @@ const signUp = async(
   postCode,
   preferredStoreId,
 ) => {
-  validateSignUp(email, password, birthdate, phoneNumber,postCode);
+  validateSignUp(email, password, birthdate, phoneNumber, postCode);
 
   const hashedPassword = await hashPassword(password);
   const createUser = await userDao.createUser(
@@ -35,7 +35,6 @@ const signUp = async(
     postCode,
     preferredStoreId,
   );
-  console.log(createUser);
   return createUser;
 };
 

@@ -41,7 +41,7 @@ const signUp = catchAsync(async (req, res) => {
     postCode,
     preferredStoreId
   );
-  res.status(201).json({ message: "user is created", createUser });
+  res.status(201).json({ message: "user is created" , createUser });
 });
 
 const signIn = async (req, res) => {
