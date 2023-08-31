@@ -6,13 +6,13 @@ const addReviewProduct = async (userId, productId, content) => {
     
 };
 
-const getAllreviewList = async (productId) => {
+const getAllReviewList = async (productId) => {
 
-    return await reviewDao.getAllreviewList(productId);
+    return await reviewDao.getAllReviewList(productId);
 
 }
 
 module.exports = {
     addReviewProduct,
-    getAllreviewList
+    getAllReviewList
 };

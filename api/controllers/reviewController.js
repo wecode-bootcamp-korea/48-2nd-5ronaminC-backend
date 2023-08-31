@@ -15,9 +15,8 @@ const addReviewProduct = catchAsync(async (req, res) => {
    res.status(201).json({ message: "Successful add review" });
 });
 
-const getAllreviewList = catchAsync(async(req, res) => {
+const getAllReviewList = catchAsync(async(req, res) => {
    const productId = req.params.productId;
-   console.log(req.params.productId);
 
    const allReviewList = await reviewService.getAllreviewList(
       productId
@@ -28,5 +27,5 @@ const getAllreviewList = catchAsync(async(req, res) => {
 
  module.exports = {
     addReviewProduct,
-    getAllreviewList
+    getAllReviewList
  };

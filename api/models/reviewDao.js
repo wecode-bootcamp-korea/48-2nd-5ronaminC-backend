@@ -27,7 +27,7 @@ const addReviewProduct = async (userId, productId, content) => {
     }
 };
 
-const getAllreviewList = async(productId) => {
+const getAllReviewList = async(productId) => {
     
     try {
         const allReviewList = await appDataSource.query(
@@ -52,5 +52,5 @@ const getAllreviewList = async(productId) => {
 
 module.exports = {
     addReviewProduct,
-    getAllreviewList
+    getAllReviewList
 };
