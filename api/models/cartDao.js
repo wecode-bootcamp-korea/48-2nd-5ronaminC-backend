@@ -133,10 +133,42 @@ const getCartList = async (userId) => {
   }
 };
 
+const deleteCartProduct = async (userId, productId) => {
+  const queryRunner = await appDataSource.createQueryRunner();
+  try {
+    await queryRunner.startTransaction();
+
+    const result = await appDataSource.query(
+      `
+      DELETE FROM carts WHERE product_id IN (?) AND user_id = ?;
+      `,
+      [productId, userId]
+    );
+
+    const deletedRows = result.affectedRows;
+
+    if (deletedRows == 0) throw new Error("[Caution] Unauthorized User");
+    else if (deletedRows !== 0 && deletedRows !== 1)
+      throw new Error("UNEXPECTED_NUMBER_OF_RECORDS_DELETED");
+
+    await queryRunner.commitTransaction();
+  } catch {
+    await queryRunner.rollbackTransaction();
+
+    const error = new Error("dataSource Error");
+    error.statusCode = 400;
+
+    throw error;
+  } finally {
+    await queryRunner.release();
+  }
+};
+
 module.exports = {
   getCartId,
   addProductsByCart,
   updateProductsByCart,
   isCartEmpty,
   getCartList,
+  deleteCartProduct,
 };

@@ -23,7 +23,17 @@ const getCartList = catchAsync(async (req, res) => {
   res.status(200).json({ data: cartList });
 });
 
+const deleteCartProduct = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  const { productId } = req.params;
+
+  await cartService.deleteCartProduct(userId, productId);
+
+  res.status(200).json({ message: "delete complete" });
+});
+
 module.exports = {
   addProductCart,
   getCartList,
+  deleteCartProduct,
 };
