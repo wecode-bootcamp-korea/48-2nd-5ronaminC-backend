@@ -6,16 +6,18 @@ const addProductCart = catchAsync(async (req, res) => {
   const productId = req.body.id;
   const productCount = req.body.productCount;
 
-  await cartService.addProductCart(userId, productId, productCount);
+  const addProductsByCart = await cartService.addProductCart(
+    userId,
+    productId,
+    productCount
+  );
 
-  res.status(201).json({ message: "Product successful add to cart" });
+  res.status(201).json({ data: addProductsByCart });
 });
 
 const deleteCartProduct = catchAsync(async (req, res) => {
   const userId = req.user.id;
   const { productId } = req.params;
-
-  console.log("productId : ", productId);
 
   await cartService.deleteCartProduct(userId, productId);
 
