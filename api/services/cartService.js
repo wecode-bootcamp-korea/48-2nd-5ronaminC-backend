@@ -13,6 +13,9 @@ const addProductCart = async (userId, productId, productCount) => {
 };
 
 const getCartList = async (userId) => {
+  const cartProductCounting = await cartDao.isCartEmpty(userId);
+  if (cartProductCounting.length === 0) return null;
+
   const cartList = await cartDao.getCartList(userId);
 
   const cartListResult = addShippingFee(cartList);

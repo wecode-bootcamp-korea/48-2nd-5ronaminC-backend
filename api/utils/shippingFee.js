@@ -1,27 +1,28 @@
 const addShippingFee = async (daoJsonObject) => {
   const [listFirstElement] = daoJsonObject;
 
-  console.log("listFirstElement");
-  console.log(listFirstElement);
-
   const totalProductPrice = parseInt(listFirstElement.totalProductPrice);
 
-  if (daoJsonObject) {
-    let shippingFee = 0;
-    if (30000 < totalProductPrice && totalProductPrice <= 60000) {
-      shippingFee = 6000;
-    } else if (0 < totalProductPrice && totalProductPrice <= 30000) {
-      shippingFee = 3000;
-    }
+  let shippingFee = 0;
 
-    for (let i = 0; i < daoJsonObject.length; i++) {
-      daoJsonObject[i]["shippingFee"] = shippingFee;
-      daoJsonObject[i]["totalOrderPrice"] = totalProductPrice + shippingFee;
+  if (daoJsonObject) {
+    const shippingFees = [
+      { threshold: 30000, fee: 3000 },
+      { threshold: 60000, fee: 6000 },
+      { threshold: 100000, fee: 12000 },
+      { threshold: 100001, fee: 0 },
+    ];
+
+    for (const feeInfo of shippingFees) {
+      if (feeInfo.threshold > totalProductPrice) {
+        shippingFee = feeInfo.fee;
+        break;
+      }
     }
   }
 
-  console.log("daoJsonObject");
-  console.log(daoJsonObject);
+  daoJsonObject[0]["shippingFee"] = shippingFee;
+  daoJsonObject[0]["totalOrderPrice"] = totalProductPrice + shippingFee;
 
   return daoJsonObject;
 };

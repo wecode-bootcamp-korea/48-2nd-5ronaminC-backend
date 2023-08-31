@@ -67,6 +67,25 @@ const updateProductsByCart = async (productCount, cartId) => {
   }
 };
 
+const isCartEmpty = async (userId) => {
+  try {
+    const data = await appDataSource.query(
+      `
+      SELECT id, user_id, product_id, product_quantity
+      FROM carts
+      WHERE user_id = ?
+      `,
+      [userId]
+    );
+    return data;
+  } catch {
+    const error = new Error("dataSource Error");
+    error.statusCode = 400;
+
+    throw error;
+  }
+};
+
 const getCartList = async (userId) => {
   try {
     const data = await appDataSource.query(
@@ -118,5 +137,6 @@ module.exports = {
   getCartId,
   addProductsByCart,
   updateProductsByCart,
+  isCartEmpty,
   getCartList,
 };
