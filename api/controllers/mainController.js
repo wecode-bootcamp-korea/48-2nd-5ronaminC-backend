@@ -28,17 +28,9 @@ const getPreferredStore = catchAsync(async (req, res) => {
     res.status(200).json({ data: posts });
 });
 
-// const getAllList = catchAsync(async (req, res) => {
-//     const { spaceId, productId } = req.query;
-
-//     const list = await mainService.getAllList(spaceId, productId);
-
-//     res.status(200).json({ data: list });
-// });
 
 module.exports = {
     getShowroom,
     getCategory,
     getPreferredStore,
-    // getAllList,
 }
