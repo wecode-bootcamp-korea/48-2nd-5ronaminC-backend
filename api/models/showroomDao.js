@@ -1,6 +1,6 @@
 const appDatasource = require('./dataSource');
 
-const getProduct = async (productId) => {
+const getProduct = async (spaceCategoryId) => {
     try {
         const result = await appDatasource.query(
             `
@@ -19,7 +19,7 @@ const getProduct = async (productId) => {
             LEFT JOIN category_spaces c ON p.category_space_id = c.id
             WHERE p.category_space_id = ?
             `,
-            [productId]
+            [spaceCategoryId]
         );
         return result   
     } catch {
@@ -30,7 +30,7 @@ const getProduct = async (productId) => {
     }
 };
 
-const getShowroom = async (productId) => {
+const getShowroom = async (spaceCategoryId) => {
     try{
         const [result] = await appDatasource.query(
             `
@@ -42,7 +42,7 @@ const getShowroom = async (productId) => {
             INNER JOIN category_spaces c ON s.category_space_id = c.id
             WHERE s.category_space_id = ?
             `,
-            [productId]
+            [spaceCategoryId]
         );
         return result
     } catch {
