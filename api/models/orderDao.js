@@ -6,33 +6,36 @@ const getOrderInformation = async (userId) => {
   try {
     const data = await appDataSource.query(
       `
-      SELECT
-        u.username,
-        u.phone_number phoneNumber,
-        u.email,
-        u.post_code postCode,
-        u.address,
-        u.point,
+      SELECT DISTINCT
+          u.username,
+          u.phone_number AS phoneNumber,
+          u.email,
+          u.post_code AS postCode,
+          u.address,
+          u.point,
           (SELECT SUM(product_quantity) 
-            FROM carts 
-            WHERE user_id = ?) AS totalProductQuantity,
+              FROM carts 
+              WHERE user_id = ?) AS totalProductQuantity,
           (SELECT SUM(ca.product_quantity * p.price)
-            FROM carts ca
-            LEFT JOIN products p ON p.id = ca.product_id
-            WHERE ca.user_id = ?) AS totalProductPrice,
-        ca.product_id productId,
-        p.product_name productName,
-        p.price,
-        p.width,
-        p.depth,
-        p.height,
-        p.color_id colorId,
-        co.color_name colorName,
-        s.option_name sizeOptionName,
-        pis.product_image_url productImageUrl,
-        ct.category_type_name categoryTypeName,
-        ca.product_quantity productQuantity,
-        ca.product_quantity * p.price AS subtotalPrice
+              FROM carts ca
+              LEFT JOIN products p ON p.id = ca.product_id
+              WHERE ca.user_id = ?) AS totalProductPrice,
+          ca.product_id AS productId,
+          p.product_name AS productName,
+          p.price,
+          p.width,
+          p.depth,
+          p.height,
+          p.color_id AS colorId,
+          co.color_name AS colorName,
+          s.option_name AS sizeOptionName,
+          (SELECT pis.product_image_url 
+              FROM product_images pis 
+              WHERE ca.product_id = pis.product_id 
+              AND pis.image_number = 1) AS productImageUrl,
+          ct.category_type_name AS categoryTypeName,
+          ca.product_quantity AS productQuantity,
+          ca.product_quantity * p.price AS subtotalPrice
       FROM carts ca    
       LEFT JOIN products p ON p.id = ca.product_id
       LEFT JOIN product_images pis ON pis.product_id = p.id
