@@ -18,7 +18,7 @@ const addReviewProduct = catchAsync(async (req, res) => {
 const getAllReviewList = catchAsync(async(req, res) => {
    const productId = req.params.productId;
 
-   const allReviewList = await reviewService.getAllreviewList(
+   const allReviewList = await reviewService.getAllReviewList(
       productId
    );
 
