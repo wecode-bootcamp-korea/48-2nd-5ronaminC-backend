@@ -1,3 +1,5 @@
+const short = require("short-uuid");
+
 const appDataSource = require("./dataSource");
 
 const getOrderInformation = async (userId) => {
@@ -51,6 +53,113 @@ const getOrderInformation = async (userId) => {
   }
 };
 
+const isEnoughPoint = async (userId) => {
+  try {
+    const data = await appDataSource.query(
+      `
+      SELECT point
+      FROM users
+      WHERE id = ?;
+      `,
+      [userId]
+    );
+    return data;
+  } catch {
+    const error = new Error("dataSource Error");
+    error.statusCode = 400;
+
+    throw error;
+  }
+};
+
+const payCartProducts = async (
+  userId,
+  productId,
+  productQuantity,
+  subtotalPrice,
+  totalOrderPrice,
+  point
+) => {
+  const queryRunner = await appDataSource.createQueryRunner();
+  await queryRunner.connect();
+  try {
+    await queryRunner.startTransaction();
+
+    let orderNumber = short.generate();
+
+    await appDataSource.query(
+      `
+      INSERT INTO 
+      orders (order_name, user_id) 
+      VALUES (?, ?);
+      `,
+      [orderNumber, userId]
+    );
+
+    for (let i = 0; i < productId.length; i++) {
+      await appDataSource.query(
+        `
+        INSERT INTO
+        order_items (order_id, product_id, order_item_quantity, order_item_price)
+        VALUES (
+          (SELECT id
+          FROM orders 
+          WHERE order_name = ?), 
+          ?, ?, ?);
+        `,
+        [orderNumber, productId[i], productQuantity[i], subtotalPrice[i]]
+      );
+    }
+
+    await appDataSource.query(
+      `
+      INSERT INTO payment_information (order_id) 
+      VALUES (
+        (SELECT id
+        FROM orders 
+        WHERE order_name = ?)
+      );
+      `,
+      [orderNumber]
+    );
+
+    const result = await appDataSource.query(
+      `DELETE FROM carts WHERE user_id = ?;`,
+      [userId]
+    );
+
+    const deletedRows = result.affectedRows;
+
+    if (deletedRows == 0) throw new Error("[Caution] No Product Information");
+    else if (deletedRows !== productId.length)
+      throw new Error("[Caution] Changed Product Quantity");
+
+    await queryRunner.query(
+      `
+      UPDATE users 
+      SET point = point - ?
+      WHERE id = ?
+      `,
+      [totalOrderPrice, userId]
+    );
+
+    await queryRunner.commitTransaction();
+
+    return "결제 완료";
+  } catch {
+    await queryRunner.rollbackTransaction();
+
+    const error = new Error("dataSource Error");
+    error.statusCode = 400;
+
+    throw error;
+  } finally {
+    await queryRunner.release();
+  }
+};
+
 module.exports = {
   getOrderInformation,
+  isEnoughPoint,
+  payCartProducts,
 };
