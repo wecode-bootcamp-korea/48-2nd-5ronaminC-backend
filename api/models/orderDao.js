@@ -93,10 +93,10 @@ const payCartProducts = async (
     await appDataSource.query(
       `
       INSERT INTO 
-      orders (order_name, user_id) 
-      VALUES (?, ?);
+      orders (order_name, user_id, order_status_code_id) 
+      VALUES (?, ?, ?);
       `,
-      [orderNumber, userId]
+      [orderNumber, userId, 1]
     );
 
     for (let i = 0; i < productId.length; i++) {
@@ -143,13 +143,15 @@ const payCartProducts = async (
       SET point = point - ?
       WHERE id = ?
       `,
-      [totalOrderPrice, userId]
+      [totalOrderPrice.toString(), userId]
     );
 
     await queryRunner.commitTransaction();
 
     return "결제 완료";
-  } catch {
+  } catch (err) {
+    console.log("log : ", err);
+
     await queryRunner.rollbackTransaction();
 
     const error = new Error("dataSource Error");
