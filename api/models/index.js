@@ -4,6 +4,7 @@ const wishDao = require("./wishDao");
 const cartDao = require("./cartDao");
 const orderDao = require("./orderDao");
 const showroomDao = require('./showroomDao');
+const reviewDao = require('./reviewDao');
 const productDao = require('./productDao');
 
 module.exports = {
@@ -13,5 +14,6 @@ module.exports = {
     cartDao,
     orderDao,
     showroomDao,
+    reviewDao,
     productDao
 };
