@@ -123,7 +123,16 @@ const payCartProducts = async (
       [orderNumber]
     );
 
-    await appDataSource.query(`DELETE FROM carts WHERE user_id = ?;`, [userId]);
+    const result = await appDataSource.query(
+      `DELETE FROM carts WHERE user_id = ?;`,
+      [userId]
+    );
+
+    const deletedRows = result.affectedRows;
+
+    if (deletedRows == 0) throw new Error("[Caution] No Product Information");
+    else if (deletedRows !== productId.length)
+      throw new Error("[Caution] Changed Product Quantity");
 
     await queryRunner.query(
       `

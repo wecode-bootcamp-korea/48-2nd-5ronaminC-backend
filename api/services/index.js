@@ -3,8 +3,8 @@ const wishService = require("./wishService");
 const cartService = require("./cartService");
 const orderService = require("./orderService");
 const showroomService = require('./showroomService');
-const reviewService = require('./reviewService');
 const productService = require('./productService');
+const reviewService = require('./reviewService');
 
 module.exports = {
     userService,
@@ -12,6 +12,6 @@ module.exports = {
     cartService,
     orderService,
     showroomService,
-    reviewService,
-    productService
+    productService,
+    reviewService
 };
